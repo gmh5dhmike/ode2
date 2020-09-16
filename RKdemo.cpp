@@ -39,18 +39,20 @@ int main(int argc, char **argv){
   UInt_t dw = 1.1*dh;
   // ******************************************************************************
 
-  tg1.SetMarkerSize(0.03*dh/8);
-  tg2.SetMarkerSize(0.03*dh/8);
   TCanvas *c1 = new TCanvas("c1","DEQ solutions",dw,dh);
 
+  //tg1.SetMarkerSize(0.02*dh/8);  // size scale: 1 = 8 pixels, so here we choose the size to be 2% of the window height
+  //tg2.SetMarkerSize(0.02*dh/8);
+  tg1.SetMarkerStyle(kFullTriangleUp);
+  tg2.SetMarkerStyle(kFullTriangleDown);
   tg1.SetMarkerColor(kRed);
   tg2.SetMarkerColor(kGreen-2);
   fun_sol.SetLineColor(kBlack);
   fun_sol.SetLineStyle(2);
   
   // plot the results
-  tg1.Draw("A*");
-  tg2.Draw("*");
+  tg1.Draw("AP");
+  tg2.Draw("P");
   fun_sol.Draw("same");
   
   TLegend *tl = new TLegend(0.6,0.7,0.9,0.9);
