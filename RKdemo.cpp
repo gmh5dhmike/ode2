@@ -7,6 +7,7 @@
 #include "TF1.h"
 #include "TCanvas.h"
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -59,6 +60,18 @@ int main(int argc, char **argv){
   tl->AddEntry(&fun_sol,"Exact Solution","l");
   tl->Draw();
   c1->Draw();
+
+  // retreive the data from the graphs an write to a file
+  FILE *fp=fopen("RKdemo.dat","w");
+  double *x, *y1, *y2;
+  x=tg1.GetX();
+  y1=tg1.GetY();
+  y2=tg2.GetY();
+  fprintf(fp,"#%8s %9s %9s %9s\n","x","RK1","RK2","Exact");
+  for (int i=0; i<tg1.GetN(); i++){
+    fprintf(fp,"%9.4lf %9.4lf %9.4lf %9.4lf\n",x[i],y1[i],y2[i],fun_sol.Eval(x[i]));
+  }
+  fclose(fp);
   
   cout << "Press ^c to exit" << endl;
   theApp.SetIdleTimer(30,".q");  // set up a failsafe timer to end the program  
